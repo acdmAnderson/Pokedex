@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Page, PokemonModel } from '../models';
+import { PageModel, PokemonModel } from '../models';
 import { GetPokemon } from './get-pokemon';
 
 describe('GetPokemon', () => {
@@ -32,7 +32,7 @@ describe('GetPokemon', () => {
 
   it('should receive data if API is ok', () => {
     const sut = getPokemon;
-    const httpResponse: Page<PokemonModel> = {
+    const httpResponse: PageModel<PokemonModel> = {
       count: 1,
       next: 'valid_url',
       previous: 'valid_url',
@@ -57,7 +57,7 @@ describe('GetPokemon', () => {
     };
     httpClientSpy.get.and.returnValue(of(httpResponse));
     sut.find().subscribe(
-      (data: Page<PokemonModel>) => {
+      (data: PageModel<PokemonModel>) => {
         expect(data).toEqual(httpResponse);
       },
       (error: HttpErrorResponse) => fail(error)

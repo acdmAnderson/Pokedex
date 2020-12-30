@@ -1,4 +1,4 @@
-export interface Page<T = any> {
+export interface PageModel<T = any> {
   results: Array<T>;
   count: number;
   previous: string;
