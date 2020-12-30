@@ -1,11 +1,3 @@
-// {
-//     "*.ts": [
-//         ,
-//         "ng lint",
-
-//     ]
-// }
-
 module.exports = {
   '*.ts': (files) => [
     'pretty-quick --staged',
