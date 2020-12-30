@@ -62,4 +62,32 @@ describe('PokedexComponent', () => {
       (error: HttpErrorResponse) => expect(error.status).toBe(500)
     );
   });
+
+  it('should return data if GetPokemon is ok', () => {
+    const sut = makePokemonComponentSut();
+    const validData: Pagination<Pokemon> = {
+      count: 1,
+      next: 1,
+      previous: 0,
+      results: [
+        {
+          id: 1,
+          height: 'valid_height',
+          weight: 'valid_height',
+          name: 'valid_name',
+          abilities: [
+            {
+              name: 'valid_ability',
+            },
+          ],
+          types: [
+            {
+              name: 'valid_type',
+            },
+          ],
+        },
+      ],
+    };
+    sut.find().subscribe((data) => expect(data).toEqual(validData));
+  });
 });

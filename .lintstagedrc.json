@@ -1,7 +1,0 @@
-{
-    "*.ts": [
-        "pretty-quick --staged",
-        "eslint 'src/app/**/*.ts' --fix",
-        "npm run test:staged"
-    ]
-}
