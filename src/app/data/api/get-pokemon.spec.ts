@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
+import { Page, PokemonModel } from '../models';
 import { GetPokemon } from './get-pokemon';
 
 describe('GetPokemon', () => {
@@ -18,7 +19,7 @@ describe('GetPokemon', () => {
     });
     httpClientSpy.get.and.returnValue(of(errorResponse));
     sut.find().subscribe(
-      (data: any) => fail('expected an error, not pokemon'),
+      (data: Page<PokemonModel>) => fail('expected an error, not pokemon'),
       (error: HttpErrorResponse) =>
         expect(errorResponse.status).toBe(error.status)
     );
