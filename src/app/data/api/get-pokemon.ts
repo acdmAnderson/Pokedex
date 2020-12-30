@@ -1,5 +1,5 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http'
-import { Observable } from 'rxjs'
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export class GetPokemon {
   constructor(private readonly http: HttpClient) {}
@@ -11,8 +11,8 @@ export class GetPokemon {
           status: 500,
           statusText: 'Internal server error',
         })
-      )
-      observer.complete()
-    })
+      );
+      observer.complete();
+    });
   }
 }
