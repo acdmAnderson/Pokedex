@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
+    "test:staged": "ng test --karmaConfig karma-staged.conf.js --browsers ChromeHeadless --no-watch",
     "lint": "ng lint --fix",
     "e2e": "ng e2e"
   },
@@ -40,6 +41,7 @@
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~3.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
+    "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
     "protractor": "~7.0.0",
