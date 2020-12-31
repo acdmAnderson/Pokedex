@@ -1,12 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { serverError } from '../helpers/http.helper';
-import { PageModel, PokemonModel } from '../models';
+import { PageModel, PokemonModel, PokemonParams } from '../models';
 import { GetPokemon } from './get-pokemon';
 
 describe('GetPokemon', () => {
   let httpClientSpy: { get: jasmine.Spy };
   let getPokemon: GetPokemon;
+  const params: PokemonParams = {
+    limit: 1,
+    offset: 0,
+  };
   beforeEach(() => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
     getPokemon = new GetPokemon(httpClientSpy as any);
@@ -20,10 +24,6 @@ describe('GetPokemon', () => {
         observer.complete();
       })
     );
-    const params = {
-      limit: 1,
-      offset: 0,
-    };
     sut.find(params).subscribe(
       () => fail('expected an error, not pokemon'),
       (error: HttpErrorResponse) => expect(error.status).toBe(500)
@@ -44,10 +44,6 @@ describe('GetPokemon', () => {
       ],
     };
     httpClientSpy.get.and.returnValue(of(httpResponse));
-    const params = {
-      limit: 1,
-      offset: 0,
-    };
     sut.find(params).subscribe(
       (data: PageModel<PokemonModel>) => {
         expect(data).toEqual(httpResponse);
@@ -59,10 +55,6 @@ describe('GetPokemon', () => {
   it('should call find with correct params', () => {
     const sut = getPokemon;
     const spyFind = spyOn(sut, 'find');
-    const params = {
-      limit: 1,
-      offset: 0,
-    };
     sut.find(params);
     expect(spyFind).toHaveBeenCalledWith({
       limit: 1,
