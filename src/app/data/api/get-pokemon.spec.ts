@@ -20,7 +20,11 @@ describe('GetPokemon', () => {
         observer.complete();
       })
     );
-    sut.find().subscribe(
+    const params = {
+      limit: 1,
+      offset: 0,
+    };
+    sut.find(params).subscribe(
       () => fail('expected an error, not pokemon'),
       (error: HttpErrorResponse) => expect(error.status).toBe(500)
     );
@@ -40,11 +44,29 @@ describe('GetPokemon', () => {
       ],
     };
     httpClientSpy.get.and.returnValue(of(httpResponse));
-    sut.find().subscribe(
+    const params = {
+      limit: 1,
+      offset: 0,
+    };
+    sut.find(params).subscribe(
       (data: PageModel<PokemonModel>) => {
         expect(data).toEqual(httpResponse);
       },
       (error: HttpErrorResponse) => fail(error)
     );
+  });
+
+  it('should call find with correct params', () => {
+    const sut = getPokemon;
+    const spyFind = spyOn(sut, 'find');
+    const params = {
+      limit: 1,
+      offset: 0,
+    };
+    sut.find(params);
+    expect(spyFind).toHaveBeenCalledWith({
+      limit: 1,
+      offset: 0,
+    });
   });
 });
