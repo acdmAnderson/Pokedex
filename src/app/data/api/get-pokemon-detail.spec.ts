@@ -12,12 +12,46 @@ describe('GetPokemonDetail', () => {
 
   it('should receive 500 if API have something error', () => {
     const sut = getPokemonDetail;
+    spyOn(sut, 'find').and.returnValues(
+      new Observable((observer) => {
+        observer.error(
+          new HttpErrorResponse({
+            status: 500,
+            statusText: 'Internal server error',
+          })
+        );
+      })
+    );
     const errorResponse = new HttpErrorResponse({
       status: 500,
       statusText: 'Internal server error',
     });
     const valid_url = 'https://valid_url.com';
     sut.find(valid_url).subscribe(
+      () => fail('expected an error, not pokemon'),
+      (error: HttpErrorResponse) =>
+        expect(errorResponse.status).toBe(error.status)
+    );
+  });
+
+  it('should receive 404 if API returns not found', () => {
+    const sut = getPokemonDetail;
+    spyOn(sut, 'find').and.returnValues(
+      new Observable((observer) => {
+        observer.error(
+          new HttpErrorResponse({
+            status: 404,
+            statusText: 'Not found',
+          })
+        );
+      })
+    );
+    const errorResponse = new HttpErrorResponse({
+      status: 404,
+      statusText: 'Not found',
+    });
+    const invalid_url = 'https://invalid_url.com';
+    sut.find(invalid_url).subscribe(
       () => fail('expected an error, not pokemon'),
       (error: HttpErrorResponse) =>
         expect(errorResponse.status).toBe(error.status)
