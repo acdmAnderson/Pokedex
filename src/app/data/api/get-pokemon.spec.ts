@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { serverError } from '../helpers/http.helper';
 import { PageModel, PokemonModel } from '../models';
 import { GetPokemon } from './get-pokemon';
 
@@ -13,20 +14,15 @@ describe('GetPokemon', () => {
 
   it('should receive 500 if API have something error', () => {
     const sut = getPokemon;
-    const errorResponse = new HttpErrorResponse({
-      status: 500,
-      statusText: 'Internal server error',
-    });
     spyOn(getPokemon, 'find').and.returnValues(
       new Observable((observer) => {
-        observer.error(errorResponse);
+        observer.error(serverError());
         observer.complete();
       })
     );
     sut.find().subscribe(
       () => fail('expected an error, not pokemon'),
-      (error: HttpErrorResponse) =>
-        expect(errorResponse.status).toBe(error.status)
+      (error: HttpErrorResponse) => expect(error.status).toBe(500)
     );
   });
 
@@ -37,22 +33,6 @@ describe('GetPokemon', () => {
       next: 'valid_url',
       previous: 'valid_url',
       results: [
-        // {
-        //   id: 1,
-        //   abilities: [
-        //     {
-        //       name: 'valid_ability',
-        //     },
-        //   ],
-        //   height: 10,
-        //   weight: 10,
-        //   name: 'valid_name',
-        //   types: [
-        //     {
-        //       name: 'valid_type',
-        //     },
-        //   ],
-        // },
         {
           name: 'valid_name',
           url: 'detail_url',

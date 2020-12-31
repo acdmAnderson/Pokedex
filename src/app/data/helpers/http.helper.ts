@@ -6,3 +6,10 @@ export const notFound = (): HttpErrorResponse => {
     statusText: 'Not found',
   });
 };
+
+export const serverError = (): HttpErrorResponse => {
+  return new HttpErrorResponse({
+    status: 500,
+    statusText: 'Internal server error',
+  });
+};

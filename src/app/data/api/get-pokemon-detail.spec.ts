@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { notFound } from '../helpers/http.helper';
+import { notFound, serverError } from '../helpers/http.helper';
 import { GetPokemonDetail } from './get-pokemon-detail';
 
 describe('GetPokemonDetail', () => {
@@ -15,23 +15,14 @@ describe('GetPokemonDetail', () => {
     const sut = getPokemonDetail;
     spyOn(sut, 'find').and.returnValues(
       new Observable((observer) => {
-        observer.error(
-          new HttpErrorResponse({
-            status: 500,
-            statusText: 'Internal server error',
-          })
-        );
+        observer.error(serverError());
+        observer.complete();
       })
     );
-    const errorResponse = new HttpErrorResponse({
-      status: 500,
-      statusText: 'Internal server error',
-    });
     const valid_url = 'https://valid_url.com';
     sut.find(valid_url).subscribe(
       () => fail('expected an error, not pokemon'),
-      (error: HttpErrorResponse) =>
-        expect(errorResponse.status).toBe(error.status)
+      (error: HttpErrorResponse) => expect(error.status).toBe(500)
     );
   });
 
