@@ -37,21 +37,25 @@ describe('GetPokemon', () => {
       next: 'valid_url',
       previous: 'valid_url',
       results: [
+        // {
+        //   id: 1,
+        //   abilities: [
+        //     {
+        //       name: 'valid_ability',
+        //     },
+        //   ],
+        //   height: 10,
+        //   weight: 10,
+        //   name: 'valid_name',
+        //   types: [
+        //     {
+        //       name: 'valid_type',
+        //     },
+        //   ],
+        // },
         {
-          id: 1,
-          abilities: [
-            {
-              name: 'valid_ability',
-            },
-          ],
-          height: 10,
-          weight: 10,
           name: 'valid_name',
-          types: [
-            {
-              name: 'valid_type',
-            },
-          ],
+          url: 'detail_url',
         },
       ],
     };
