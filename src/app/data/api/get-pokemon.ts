@@ -1,11 +1,11 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PageModel, PokemonModel } from '../models';
+import { PageModel, PokemonModel, PokemonParams } from '../models';
 
 export class GetPokemon {
   constructor(private readonly http: HttpClient) {}
 
-  find(): Observable<PageModel<PokemonModel>> {
+  find(params: PokemonParams): Observable<PageModel<PokemonModel>> {
     return this.http.get<PageModel<PokemonModel>>('');
   }
 }
