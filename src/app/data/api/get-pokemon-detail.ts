@@ -6,13 +6,6 @@ export class GetPokemonDetail {
   constructor(private readonly http: HttpClient) {}
 
   find(url: string): Observable<PokemonDetailModel> {
-    return new Observable((observer) => {
-      observer.error(
-        new HttpErrorResponse({
-          status: 500,
-          statusText: 'Internal Server Error',
-        })
-      );
-    });
+    return this.http.get<PokemonDetailModel>(url);
   }
 }
