@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { notFound } from '../helpers/http.helper';
 import { GetPokemonDetail } from './get-pokemon-detail';
 
 describe('GetPokemonDetail', () => {
@@ -38,23 +39,14 @@ describe('GetPokemonDetail', () => {
     const sut = getPokemonDetail;
     spyOn(sut, 'find').and.returnValues(
       new Observable((observer) => {
-        observer.error(
-          new HttpErrorResponse({
-            status: 404,
-            statusText: 'Not found',
-          })
-        );
+        observer.error(notFound());
+        observer.complete();
       })
     );
-    const errorResponse = new HttpErrorResponse({
-      status: 404,
-      statusText: 'Not found',
-    });
     const invalid_url = 'https://invalid_url.com';
     sut.find(invalid_url).subscribe(
       () => fail('expected an error, not pokemon'),
-      (error: HttpErrorResponse) =>
-        expect(errorResponse.status).toBe(error.status)
+      (error: HttpErrorResponse) => expect(error.status).toBe(404)
     );
   });
 
