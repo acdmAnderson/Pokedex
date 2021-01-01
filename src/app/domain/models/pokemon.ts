@@ -14,3 +14,8 @@ export interface Ability {
 export interface Type {
   name: string;
 }
+
+export interface PokemonParams {
+  limit: number;
+  offset: number;
+}

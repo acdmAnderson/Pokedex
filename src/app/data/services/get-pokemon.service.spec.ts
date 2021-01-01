@@ -16,7 +16,7 @@ describe('GetPokemonService', () => {
 
   it('should receive 500 if API have some error ', () => {
     const sut = TestBed.inject(GetPokemonService);
-    sut.find().subscribe(
+    sut.find(params).subscribe(
       () => fail('Expected a error not a pokemon'),
       (error: HttpErrorResponse) => expect(error.status).toBe(500)
     );

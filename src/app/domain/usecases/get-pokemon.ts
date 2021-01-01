@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { Pagination, Pokemon } from '../models';
+import { Pagination, Pokemon, PokemonParams } from '../models';
 
 export interface GetPokemon {
-  find(): Observable<Pagination<Pokemon>>;
+  find(params: PokemonParams): Observable<Pagination<Pokemon>>;
 }
