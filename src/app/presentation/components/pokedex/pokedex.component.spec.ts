@@ -1,5 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { Inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { GetPokemon } from 'src/app/data/api/get-pokemon';
+import { GetPokemonDetail } from 'src/app/data/api/get-pokemon-detail';
 import { Pagination, Pokemon } from 'src/app/domain/models';
 import { GetPokemonUseCase } from 'src/app/domain/usecases/get-pokemon';
 import { PokedexComponent } from './pokedex.component';
@@ -7,6 +10,7 @@ import { PokedexComponent } from './pokedex.component';
 describe('PokedexComponent', () => {
   const makeGetPokemonSut = (): GetPokemonUseCase => {
     class GetPokemonStub implements GetPokemonUseCase {
+      constructor(getPokemon: GetPokemon, getPokemonDetail: GetPokemonDetail) {}
       find(): Observable<Pagination<Pokemon>> {
         return new Observable((observer) => {
           const fakePaginationPokemon: Pagination<Pokemon> = {
@@ -37,12 +41,12 @@ describe('PokedexComponent', () => {
         });
       }
     }
-    return new GetPokemonStub();
+    return new GetPokemonStub(Inject(GetPokemon), Inject(GetPokemonDetail));
   };
 
   const makePokemonComponentSut = (): PokedexComponent => {
     const getPokemonStub = makeGetPokemonSut();
-    return new PokedexComponent(getPokemonStub);
+    return new PokedexComponent(getPokemonStub as any);
   };
 
   it('should return error if GetPokemon have something error', () => {
