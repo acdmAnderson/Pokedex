@@ -150,4 +150,14 @@ describe('GetPokemonService', () => {
       done();
     });
   });
+
+  it('should be called with correct params', () => {
+    const { sut } = makeSut();
+    const spyFind = spyOn(sut, 'find');
+    sut.find(params);
+    expect(spyFind).toHaveBeenCalledWith({
+      limit: 1,
+      offset: 0,
+    });
+  });
 });
