@@ -1,8 +1,9 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { GetApi } from '../contracts/get-api';
 import { PokemonDetailModel } from '../models';
 
-export class GetPokemonDetail {
+export class GetPokemonDetail implements GetApi<PokemonDetailModel> {
   constructor(private readonly http: HttpClient) {}
 
   find(url: string): Observable<PokemonDetailModel> {
