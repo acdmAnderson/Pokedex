@@ -1,12 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Pagination, Pokemon } from 'src/app/domain/models';
-import { GetPokemon } from 'src/app/domain/usecases/get-pokemon';
+import { GetPokemonUseCase } from 'src/app/domain/usecases/get-pokemon';
 import { PokedexComponent } from './pokedex.component';
 
 describe('PokedexComponent', () => {
-  const makeGetPokemonSut = (): GetPokemon => {
-    class GetPokemonStub implements GetPokemon {
+  const makeGetPokemonSut = (): GetPokemonUseCase => {
+    class GetPokemonStub implements GetPokemonUseCase {
       find(): Observable<Pagination<Pokemon>> {
         return new Observable((observer) => {
           const fakePaginationPokemon: Pagination<Pokemon> = {

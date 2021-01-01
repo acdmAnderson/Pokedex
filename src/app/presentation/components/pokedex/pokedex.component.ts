@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Pagination, Pokemon, PokemonParams } from 'src/app/domain/models';
-import { GetPokemon } from 'src/app/domain/usecases/get-pokemon';
+import { GetPokemonUseCase } from 'src/app/domain/usecases/get-pokemon';
 
 @Component({
   selector: 'app-pokedex',
@@ -13,7 +13,7 @@ export class PokedexComponent implements OnInit {
     limit: 20,
     offset: 20,
   };
-  constructor(private readonly getPokemon: GetPokemon) {}
+  constructor(private readonly getPokemon: GetPokemonUseCase) {}
 
   ngOnInit(): void {}
 
