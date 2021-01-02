@@ -1,16 +1,30 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Inject } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { async, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs';
-import { GetPokemon } from 'src/app/data/api/get-pokemon';
-import { GetPokemonDetail } from 'src/app/data/api/get-pokemon-detail';
+import { GetPokemonService } from 'src/app/data/services/get-pokemon.service';
 import { Pagination, Pokemon } from 'src/app/domain/models';
 import { GetPokemonUseCase } from 'src/app/domain/usecases/get-pokemon';
 import { PokedexComponent } from './pokedex.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('PokedexComponent', () => {
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, RouterTestingModule],
+      declarations: [PokedexComponent],
+      providers: [
+        { provide: GetPokemonService, useValue: makeGetPokemonSut() },
+      ],
+    }).compileComponents();
+    TestBed.inject(HttpClient);
+  }));
+
   const makeGetPokemonSut = (): GetPokemonUseCase => {
-    class GetPokemonStub implements GetPokemonUseCase {
-      constructor(getPokemon: GetPokemon, getPokemonDetail: GetPokemonDetail) {}
+    class GetPokemonStub extends GetPokemonUseCase {
+      constructor() {
+        super();
+      }
       find(): Observable<Pagination<Pokemon>> {
         return new Observable((observer) => {
           const fakePaginationPokemon: Pagination<Pokemon> = {
@@ -41,7 +55,7 @@ describe('PokedexComponent', () => {
         });
       }
     }
-    return new GetPokemonStub(Inject(GetPokemon), Inject(GetPokemonDetail));
+    return new GetPokemonStub();
   };
 
   const makePokemonComponentSut = (): PokedexComponent => {
@@ -93,5 +107,11 @@ describe('PokedexComponent', () => {
       ],
     };
     sut.find().subscribe((data) => expect(data).toEqual(validData));
+  });
+
+  it('should create the Pokedex', () => {
+    const fixture = TestBed.createComponent(PokedexComponent);
+    const pokedex = fixture.componentInstance;
+    expect(pokedex).toBeTruthy();
   });
 });
