@@ -49,7 +49,7 @@ describe('PokedexComponent', () => {
     return new PokedexComponent(getPokemonStub as any);
   };
 
-  it('should return error if GetPokemon have something error', () => {
+  it('should receive error if GetPokemonService have something error', () => {
     const sut = makePokemonComponentSut();
     spyOn(sut, 'find').and.returnValues(
       new Observable((observer) => {
@@ -67,7 +67,7 @@ describe('PokedexComponent', () => {
     );
   });
 
-  it('should return data if GetPokemon is ok', () => {
+  it('should return data if GetPokemonService is ok', () => {
     const sut = makePokemonComponentSut();
     const validData: Pagination<Pokemon> = {
       count: 1,

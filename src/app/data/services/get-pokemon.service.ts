@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ErrorHandler, Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
 import { Pagination, Pokemon, PokemonParams } from 'src/app/domain/models';
 import { GetPokemonUseCase } from 'src/app/domain/usecases/get-pokemon';
 import { GetPokemon } from '../api/get-pokemon';
 import { GetPokemonDetail } from '../api/get-pokemon-detail';
-import { mergeMap } from 'rxjs/operators';
+import { catchError, mergeMap } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { mapToPokemon } from '../helpers/mapper.helper';
 
 @Injectable()
 export class GetPokemonService implements GetPokemonUseCase {
@@ -14,24 +16,21 @@ export class GetPokemonService implements GetPokemonUseCase {
   ) {}
   find(params: PokemonParams): Observable<Pagination<Pokemon>> {
     return this.getPokemon.find(params).pipe(
+      catchError((err: HttpErrorResponse) => throwError(err)),
       mergeMap(async (page) => {
         const { count, results } = page;
-        const pokemonDetail = [];
+        const pokedex = [];
         for (const { url } of results) {
-          const pokemonDetailt = await this.getPokemonDetail
+          const pokemonDetail = await this.getPokemonDetail
             .find(url)
             .toPromise();
-          pokemonDetail.push({
-            ...pokemonDetailt,
-            height: `${pokemonDetailt.height} dm`,
-            weight: `${pokemonDetailt.weight} hg`,
-          });
+          pokedex.push(mapToPokemon(pokemonDetail));
         }
         return {
           count,
           next: 0,
           previous: 1,
-          results: pokemonDetail,
+          results: pokedex,
         };
       })
     );
