@@ -58,13 +58,9 @@ describe('PokedexComponent', () => {
     return new GetPokemonStub();
   };
 
-  const makePokemonComponentSut = (): PokedexComponent => {
-    const getPokemonStub = makeGetPokemonSut();
-    return new PokedexComponent(getPokemonStub as any);
-  };
-
   it('should receive error if GetPokemonService have something error', () => {
-    const sut = makePokemonComponentSut();
+    const fixture = TestBed.createComponent(PokedexComponent);
+    const sut = fixture.componentInstance;
     spyOn(sut, 'find').and.returnValues(
       new Observable((observer) => {
         observer.error(
@@ -82,7 +78,8 @@ describe('PokedexComponent', () => {
   });
 
   it('should return data if GetPokemonService is ok', () => {
-    const sut = makePokemonComponentSut();
+    const fixture = TestBed.createComponent(PokedexComponent);
+    const sut = fixture.componentInstance;
     const validData: Pagination<Pokemon> = {
       count: 1,
       pageSize: 1,
