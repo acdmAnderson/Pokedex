@@ -12,12 +12,16 @@ import {
   mapToPokemon,
 } from '../helpers/mapper.helper';
 
-@Injectable()
-export class GetPokemonService implements GetPokemonUseCase {
+@Injectable({
+  providedIn: 'root',
+})
+export class GetPokemonService extends GetPokemonUseCase {
   constructor(
     private readonly getPokemon: GetPokemon,
     private readonly getPokemonDetail: GetPokemonDetail
-  ) {}
+  ) {
+    super();
+  }
   find(params: PokemonParams): Observable<Pagination<Pokemon>> {
     return this.getPokemon.find(params).pipe(
       catchError((err: HttpErrorResponse) => throwError(err)),
