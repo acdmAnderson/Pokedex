@@ -1,1 +1,74 @@
 /* You can add global styles to this file, and also import other style files */
+.bg-bug{
+    background-color: #3b9950;
+}
+
+.bg-dark{
+    background-color: #5a5979;
+}
+
+.bg-dragon{
+    background-color:#61cad9;
+}
+
+.bg-eletric{
+    background-color: #fbfb72;
+}
+
+.bg-fairy{
+    background-color: #ea1369;
+}
+
+.bg-fighting{
+    background-color: #ef6138;
+}
+
+.bg-fire{
+    background-color: #fd4c5a;
+}
+
+.bg-flying{
+    background-color: #93b2c7;
+}
+
+.bg-ghost{
+    background-color: #906790;
+}
+
+.bg-grass{
+    background-color: #26cb4d;
+}
+
+.bg-ground{
+    background-color: #a9702c;
+}
+
+.bg-ice{
+    background-color: #d7f0fa;
+}
+
+.bg-normal{
+    background-color: #ca98a7;
+}
+
+.bg-poison{
+    background-color: #9b69d9;
+}
+
+.bg-psychic{
+    background-color: #f81c91;
+}
+
+.bg-rock{
+    background-color: #8b3e21;
+}
+
+.bg-steel{
+    background-color: #5f756d;
+}
+
+.bg-water{
+    background-color: #86a8fc;
+}
+
+

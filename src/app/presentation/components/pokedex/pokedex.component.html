@@ -1,29 +1,26 @@
-<div>
-  <ng-template [ngIf]="!isLoading">
-    <ul *ngFor="let pokemon of pokedex">
-      <li>
-        <span>{{ pokemon.name }} - </span>
-        <span>{{ pokemon.height }} - </span>
-        <span>{{ pokemon.weight }}</span>
-        <img
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{
-            pokemon.id
-          }}.png"
-        />
-        <br />
-        <span>
-          Abilities
-          <ul *ngFor="let ability of pokemon.abilities">
-            <li>{{ ability.ability.name }}</li>
-          </ul>
-        </span>
-        <span>
-          Types
-          <ul *ngFor="let type of pokemon.types">
-            <li>{{ type.type.name }}</li>
-          </ul>
-        </span>
-      </li>
-    </ul>
-  </ng-template>
+<div class="container-fluid my-5">
+    <ng-template [ngIf]="!isLoading">
+        <div class="row m-5-sm">
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-5" *ngFor="let pokemon of pokedex">
+                <div class="card shadow rouded" style="width: 25rem;">
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{
+                    pokemon.id
+                  }}.png" class="card-img-top" alt="{{ pokemon.name }} image">
+                    <div class="card-body">
+                        <h3 class="card-title"><b>{{ pokemon.name }}</b></h3>
+                        <ul *ngFor="let object of pokemon.abilities" class="list-group list-group-flush">
+                            <li class="list-group-item">{{ object.ability.name }}</li>
+                        </ul>
+                    </div>
+                    <div class="card-body text-center">
+                        <h4>
+                            <span *ngFor="let object of pokemon.types" class="p-1">
+                                <span class="badge bg-{{object.type.name}}">{{object.type.name}}</span>
+                            </span>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
 </div>
