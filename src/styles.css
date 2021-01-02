@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+.animated {
+    transition: transform .5s;
+}
+
 .bg-bug{
     background-color: #3b9950;
 }
