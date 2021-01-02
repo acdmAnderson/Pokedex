@@ -6,7 +6,11 @@ import { GetPokemon } from '../api/get-pokemon';
 import { GetPokemonDetail } from '../api/get-pokemon-detail';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { mapToPage, mapToPokemon } from '../helpers/mapper.helper';
+import {
+  mapToPage,
+  mapToPageSize,
+  mapToPokemon,
+} from '../helpers/mapper.helper';
 
 @Injectable()
 export class GetPokemonService implements GetPokemonUseCase {
@@ -29,7 +33,7 @@ export class GetPokemonService implements GetPokemonUseCase {
         return {
           count,
           page: mapToPage(next),
-          pageSize: 1,
+          pageSize: mapToPageSize(next),
           results: pokedex,
         };
       })

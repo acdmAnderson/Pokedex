@@ -25,3 +25,16 @@ export const mapToPage = (urlNext: string): number => {
   }
   return page;
 };
+
+export const mapToPageSize = (urlNext: string): number => {
+  const queryParams = urlNext.split('?')[1];
+  let pageSize = 0;
+  if (queryParams) {
+    const params = queryParams.split('&');
+    const limit = +params
+      .find((parameter) => parameter.includes('limit'))
+      .split('=')[1];
+    pageSize = limit;
+  }
+  return pageSize;
+};
