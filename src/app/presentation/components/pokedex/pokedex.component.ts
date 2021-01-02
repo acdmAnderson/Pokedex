@@ -18,6 +18,7 @@ export class PokedexComponent implements OnInit, OnDestroy {
   page: number;
   pageSize: number;
   pokedex: Array<Pokemon>;
+  isLoading = false;
   constructor(private readonly getPokemonService: GetPokemonService) {
     this.unsubscribeAll = new Subject();
   }
@@ -27,16 +28,18 @@ export class PokedexComponent implements OnInit, OnDestroy {
       limit: this.LIMIT,
       offset: this.OFFSET,
     };
+    this.isLoading = true;
     this.getPokemons()
       .pipe(
         takeUntil(this.unsubscribeAll),
-        finalize(() => console.log())
+        finalize(() => (this.isLoading = false))
       )
       .subscribe((paginationPokemon) => {
         const { page, pageSize, results } = paginationPokemon;
         this.page = page;
         this.pageSize = pageSize;
         this.pokedex = results;
+        console.log(results);
       });
   }
 
