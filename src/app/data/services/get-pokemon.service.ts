@@ -37,7 +37,7 @@ export class GetPokemonService extends GetPokemonUseCase {
         return {
           count,
           page: mapToPage(next),
-          pageSize: mapToPageSize(next),
+          pageSize: mapToPageSize(pokedex),
           results: pokedex,
         };
       })
