@@ -123,8 +123,8 @@ describe('GetPokemonService', () => {
     const { sut } = makeSut();
     const serviceResponse: Pagination<Pokemon> = {
       count: 1,
-      next: 0,
-      previous: 1,
+      pageSize: 0,
+      page: 1,
       results: [
         {
           id: 1,

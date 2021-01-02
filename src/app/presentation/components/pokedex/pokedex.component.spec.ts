@@ -15,8 +15,8 @@ describe('PokedexComponent', () => {
         return new Observable((observer) => {
           const fakePaginationPokemon: Pagination<Pokemon> = {
             count: 1,
-            next: 1,
-            previous: 0,
+            pageSize: 1,
+            page: 0,
             results: [
               {
                 id: 1,
@@ -71,8 +71,8 @@ describe('PokedexComponent', () => {
     const sut = makePokemonComponentSut();
     const validData: Pagination<Pokemon> = {
       count: 1,
-      next: 1,
-      previous: 0,
+      pageSize: 1,
+      page: 0,
       results: [
         {
           id: 1,

@@ -6,7 +6,7 @@ import { GetPokemon } from '../api/get-pokemon';
 import { GetPokemonDetail } from '../api/get-pokemon-detail';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { mapToPokemon } from '../helpers/mapper.helper';
+import { mapToPage, mapToPokemon } from '../helpers/mapper.helper';
 
 @Injectable()
 export class GetPokemonService implements GetPokemonUseCase {
@@ -18,7 +18,7 @@ export class GetPokemonService implements GetPokemonUseCase {
     return this.getPokemon.find(params).pipe(
       catchError((err: HttpErrorResponse) => throwError(err)),
       mergeMap(async (page) => {
-        const { count, results } = page;
+        const { count, results, next } = page;
         const pokedex = [];
         for (const { url } of results) {
           const pokemonDetail = await this.getPokemonDetail
@@ -28,8 +28,8 @@ export class GetPokemonService implements GetPokemonUseCase {
         }
         return {
           count,
-          next: 0,
-          previous: 1,
+          page: mapToPage(next),
+          pageSize: 1,
           results: pokedex,
         };
       })
