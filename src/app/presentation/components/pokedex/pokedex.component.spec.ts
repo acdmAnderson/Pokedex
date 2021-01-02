@@ -61,7 +61,7 @@ describe('PokedexComponent', () => {
   it('should receive error if GetPokemonService have something error', () => {
     const fixture = TestBed.createComponent(PokedexComponent);
     const sut = fixture.componentInstance;
-    spyOn(sut, 'find').and.returnValues(
+    spyOn(sut, 'getPokemons').and.returnValues(
       new Observable((observer) => {
         observer.error(
           new HttpErrorResponse({
@@ -71,7 +71,7 @@ describe('PokedexComponent', () => {
         );
       })
     );
-    sut.find().subscribe(
+    sut.getPokemons().subscribe(
       () => fail('Expected a error not a pokemon'),
       (error: HttpErrorResponse) => expect(error.status).toBe(500)
     );
@@ -103,7 +103,7 @@ describe('PokedexComponent', () => {
         },
       ],
     };
-    sut.find().subscribe((data) => expect(data).toEqual(validData));
+    sut.getPokemons().subscribe((data) => expect(data).toEqual(validData));
   });
 
   it('should create the Pokedex', () => {
