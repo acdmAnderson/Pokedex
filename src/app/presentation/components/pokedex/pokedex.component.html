@@ -1,9 +1,44 @@
 <div class="container-fluid my-5">
     <ng-template [ngIf]="!isLoading">
-        <div class="row m-5-sm">
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-5" *ngFor="let pokemon of pokedex">
-                <div class="card shadow rouded" style="width: 25rem;">
-                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-5 d-flex justify-content-center" *ngFor="let pokemon of pokedex">
+                <div class="card bg-light shadow rouded" style="width: 28rem;">
+                    <div class="row no-gutters">
+                        <div class="col-md-5">
+                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{
+                                pokemon.id
+                              }}.png" class="card-img mx-auto d-block" alt="{{ pokemon.name }} image">
+                            <div class="m-3">
+                                <p class="card-text text-muted">
+                                    <fa-icon [icon]="['fas', 'ruler']"></fa-icon> {{pokemon.height}}
+                                </p>
+                                <p class="card-text text-muted">
+                                    <fa-icon [icon]="['fas', 'balance-scale']"></fa-icon> {{pokemon.weight}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="card-body h-75 mb-n3">
+                                <h3 class="card-title text-capitalize" style="font-size: 20px;"><b>{{ pokemon.name
+                                        }}</b></h3>
+                                <hr>
+                                <h5 *ngFor="let object of pokemon.abilities; let i = index" class="card-text">
+                                    {{object.ability.name}}
+                                </h5>
+                            </div>
+                            <div class="card-body mb-1">
+                                <h4>
+                                    <span class="d-block">
+                                        <div class="d-inline m-1" *ngFor="let object of pokemon.types">
+                                            <span style="width: 82px;"
+                                                class="badge bg-{{object.type.name}}">{{object.type.name}}</span>
+                                        </div>
+                                    </span>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{
                     pokemon.id
                   }}.png" class="card-img-top" alt="{{ pokemon.name }} image">
                     <div class="card-body">
@@ -18,7 +53,7 @@
                                 <span class="badge bg-{{object.type.name}}">{{object.type.name}}</span>
                             </span>
                         </h4>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
