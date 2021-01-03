@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
+import { GetPokemonByNameService } from 'src/app/data/services/get-pokemon-by-name.service';
 import { GetPokemonService } from 'src/app/data/services/get-pokemon.service';
 import { Pagination, Pokemon, PokemonParams } from 'src/app/domain/models';
 
@@ -20,7 +21,10 @@ export class PokedexComponent implements OnInit, OnDestroy {
   pageSize: number;
   pokedex: Array<Pokemon>;
   isLoading = false;
-  constructor(private readonly getPokemonService: GetPokemonService) {
+  constructor(
+    private readonly getPokemonService: GetPokemonService,
+    private readonly getPokemonByNameService: GetPokemonByNameService
+  ) {
     this.unsubscribeAll = new Subject();
   }
 
@@ -54,31 +58,6 @@ export class PokedexComponent implements OnInit, OnDestroy {
   }
 
   getPokemonsByName(): Observable<Pagination<Pokemon>> {
-    return new Observable((observer) => {
-      observer.next({
-        count: 1,
-        pageSize: 1,
-        page: 0,
-        results: [
-          {
-            id: 1,
-            height: 'valid_height',
-            weight: 'valid_weight',
-            name: 'name_searched',
-            abilities: [
-              {
-                name: 'valid_ability',
-              },
-            ],
-            types: [
-              {
-                name: 'valid_type',
-              },
-            ],
-          },
-        ],
-      });
-      observer.complete();
-    });
+    return this.getPokemonByNameService.findByName(this.pokemonName);
   }
 }

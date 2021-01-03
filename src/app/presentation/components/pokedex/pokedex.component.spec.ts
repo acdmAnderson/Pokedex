@@ -7,6 +7,8 @@ import { GetPokemonUseCase } from 'src/app/domain/usecases/get-pokemon';
 import { PokedexComponent } from './pokedex.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { GetPokemonByNameUseCase } from 'src/app/domain/usecases/get-pokemon-by-name';
+import { GetPokemonByNameService } from 'src/app/data/services/get-pokemon-by-name.service';
 
 describe('PokedexComponent', () => {
   beforeEach(async(() => {
@@ -15,6 +17,10 @@ describe('PokedexComponent', () => {
       declarations: [PokedexComponent],
       providers: [
         { provide: GetPokemonService, useValue: makeGetPokemonSut() },
+        {
+          provide: GetPokemonByNameService,
+          useValue: makeGetPokemonByNameSut(),
+        },
       ],
     }).compileComponents();
     TestBed.inject(HttpClient);
@@ -56,6 +62,44 @@ describe('PokedexComponent', () => {
       }
     }
     return new GetPokemonStub();
+  };
+
+  const makeGetPokemonByNameSut = (): GetPokemonByNameUseCase => {
+    class GetPokemonByNameStub extends GetPokemonByNameUseCase {
+      constructor() {
+        super();
+      }
+      findByName(pokemonName: string): Observable<Pagination<Pokemon>> {
+        return new Observable((observer) => {
+          const fakePaginationPokemon: Pagination<Pokemon> = {
+            count: 1,
+            pageSize: 1,
+            page: 0,
+            results: [
+              {
+                id: 1,
+                height: 'valid_height',
+                weight: 'valid_weight',
+                name: 'name_searched',
+                abilities: [
+                  {
+                    name: 'valid_ability',
+                  },
+                ],
+                types: [
+                  {
+                    name: 'valid_type',
+                  },
+                ],
+              },
+            ],
+          };
+          observer.next(fakePaginationPokemon);
+          observer.complete();
+        });
+      }
+    }
+    return new GetPokemonByNameStub();
   };
 
   const makeServerError = (): HttpErrorResponse => {
