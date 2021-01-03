@@ -12,10 +12,9 @@ import {
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { TopNavbarComponent } from './presentation/components/top-navbar/top-navbar.component';
 
 @NgModule({
-  declarations: [AppComponent, PokedexComponent, TopNavbarComponent],
+  declarations: [AppComponent, PokedexComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
