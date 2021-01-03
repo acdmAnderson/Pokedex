@@ -13,14 +13,18 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="card-body">
+                                    <h6 class="text-muted">
+                                        #{{ pokemon.id }}
+                                    </h6>
                                     <h3 class="card-title text-capitalize" style="font-size: 15px;"><b>{{
                                             pokemon.name
-                                            }}</b></h3>
+                                            }}</b>
+                                    </h3>
                                     <hr>
                                     <div class="mh-75" style="height: 70px;">
                                         <small class=" text-capitalize">
                                             <p *ngFor="let object of pokemon.abilities; let i = index" class="card-text">
-                                                {{object.ability.name}}
+                                                {{ object.ability.name }}
                                             </p>
                                         </small>
                                     </div>
