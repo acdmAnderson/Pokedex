@@ -1,61 +1,54 @@
 <div class="container-fluid my-5">
-    <ng-template [ngIf]="!isLoading">
-        <div class="row">
-            <div class="col-xl-3 col-lg-4 col-md-6 mb-5 d-flex justify-content-center" *ngFor="let pokemon of pokedex">
-                <div class="card bg-light shadow rouded" style="width: 28rem;">
-                    <div class="row no-gutters">
-                        <div class="col-md-5">
-                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{
-                                pokemon.id
-                              }}.png" class="card-img mx-auto d-block" alt="{{ pokemon.name }} image">
-                            <div class="m-3">
-                                <p class="card-text text-muted">
-                                    <fa-icon [icon]="['fas', 'ruler']"></fa-icon> {{pokemon.height}}
-                                </p>
-                                <p class="card-text text-muted">
-                                    <fa-icon [icon]="['fas', 'balance-scale']"></fa-icon> {{pokemon.weight}}
-                                </p>
+    <div class="poke-container">
+        <ng-template [ngIf]="!isLoading">
+            <div class="row">
+                <div class="col-xl-3 col-lg-4 col-md-6 mb-5 d-flex justify-content-center"
+                    *ngFor="let pokemon of pokedex">
+                    <div class="card bg-light shadow rouded" style="width: 28rem;">
+                        <div class="row no-gutters">
+                            <div class="col-md-5">
+                                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{
+                                        pokemon.id
+                                      }}.png" class="card-img mx-auto d-block" alt="{{ pokemon.name }} image">
                             </div>
-                        </div>
-                        <div class="col-md-7">
-                            <div class="card-body h-75 mb-n3">
-                                <h3 class="card-title text-capitalize" style="font-size: 20px;"><b>{{ pokemon.name
-                                        }}</b></h3>
-                                <hr>
-                                <h5 *ngFor="let object of pokemon.abilities; let i = index" class="card-text">
-                                    {{object.ability.name}}
-                                </h5>
+                            <div class="col-md-7">
+                                <div class="card-body">
+                                    <h3 class="card-title text-capitalize" style="font-size: 20px;"><b>{{
+                                            pokemon.name
+                                            }}</b></h3>
+                                    <hr>
+                                    <div class="mh-75" style="height: 70px;">
+                                        <small class=" text-capitalize">
+                                            <p *ngFor="let object of pokemon.abilities; let i = index" class="card-text">
+                                                {{object.ability.name}}
+                                            </p>
+                                        </small>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body mb-1">
-                                <h4>
-                                    <span class="d-block">
-                                        <div class="d-inline m-1" *ngFor="let object of pokemon.types">
-                                            <span style="width: 82px;"
-                                                class="badge bg-{{object.type.name}}">{{object.type.name}}</span>
+                            <div class="col-md">
+                                <div class="card-body text-center">
+                                    <p class="card-text text-muted">
+                                        <fa-icon [icon]="['fas', 'ruler']"></fa-icon> {{pokemon.height}}
+                                    </p>
+                                    <p class="card-text text-muted">
+                                        <fa-icon [icon]="['fas', 'balance-scale']"></fa-icon> {{pokemon.weight}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="card-body">
+                                    <h5>
+                                        <div class="card-text" *ngFor="let object of pokemon.types">
+                                            <p style="width: 82px;" class="badge bg-{{object.type.name}} text-white">{{object.type.name}}</p>
                                         </div>
-                                    </span>
-                                </h4>
+                                    </h5>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{
-                    pokemon.id
-                  }}.png" class="card-img-top" alt="{{ pokemon.name }} image">
-                    <div class="card-body">
-                        <h3 class="card-title"><b>{{ pokemon.name }}</b></h3>
-                        <ul *ngFor="let object of pokemon.abilities" class="list-group list-group-flush">
-                            <li class="list-group-item">{{ object.ability.name }}</li>
-                        </ul>
-                    </div>
-                    <div class="card-body text-center">
-                        <h4>
-                            <span *ngFor="let object of pokemon.types" class="p-1">
-                                <span class="badge bg-{{object.type.name}}">{{object.type.name}}</span>
-                            </span>
-                        </h4>
-                    </div> -->
                 </div>
             </div>
-        </div>
-    </ng-template>
+        </ng-template>
+    </div>
 </div>
