@@ -124,4 +124,23 @@ describe('PokedexComponent', () => {
       expect(havePokemon).toBe(true);
     });
   });
+
+  it('should receive error if GetPokemonByNameService have something error', () => {
+    const fixture = TestBed.createComponent(PokedexComponent);
+    const sut = fixture.componentInstance;
+    spyOn(sut, 'getPokemonsByName').and.returnValues(
+      new Observable((observer) => {
+        observer.error(
+          new HttpErrorResponse({
+            status: 500,
+            statusText: 'Internal server error',
+          })
+        );
+      })
+    );
+    sut.getPokemonsByName().subscribe(
+      () => fail('Expected a error not a pokemon'),
+      (error: HttpErrorResponse) => expect(error.status).toBe(500)
+    );
+  });
 });
