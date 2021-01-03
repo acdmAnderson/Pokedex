@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { GetPokemonService } from 'src/app/data/services/get-pokemon.service';
@@ -14,6 +14,7 @@ export class PokedexComponent implements OnInit, OnDestroy {
   private readonly OFFSET = 20;
   private unsubscribeAll: Subject<any>;
 
+  @Input() pokemonName: string;
   pokemonParams: PokemonParams;
   page: number;
   pageSize: number;
@@ -50,5 +51,34 @@ export class PokedexComponent implements OnInit, OnDestroy {
 
   getPokemons(): Observable<Pagination<Pokemon>> {
     return this.getPokemonService.find(this.pokemonParams);
+  }
+
+  getPokemonsByName(): Observable<Pagination<Pokemon>> {
+    return new Observable((observer) => {
+      observer.next({
+        count: 1,
+        pageSize: 1,
+        page: 0,
+        results: [
+          {
+            id: 1,
+            height: 'valid_height',
+            weight: 'valid_weight',
+            name: 'name_searched',
+            abilities: [
+              {
+                name: 'valid_ability',
+              },
+            ],
+            types: [
+              {
+                name: 'valid_type',
+              },
+            ],
+          },
+        ],
+      });
+      observer.complete();
+    });
   }
 }
