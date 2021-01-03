@@ -64,6 +64,7 @@ describe('PokedexComponent', () => {
       statusText: 'Internal server error',
     });
   };
+
   it('should receive 500 if GetPokemonService have something error', () => {
     const fixture = TestBed.createComponent(PokedexComponent);
     const sut = fixture.componentInstance;
@@ -140,17 +141,19 @@ describe('PokedexComponent', () => {
     );
   });
 
+  const makeNotFoundError = (): HttpErrorResponse => {
+    return new HttpErrorResponse({
+      status: 404,
+      statusText: 'Not found',
+    });
+  };
+
   it('should receive 404 if GetPokemonByNameService have something error', () => {
     const fixture = TestBed.createComponent(PokedexComponent);
     const sut = fixture.componentInstance;
     spyOn(sut, 'getPokemonsByName').and.returnValues(
       new Observable((observer) => {
-        observer.error(
-          new HttpErrorResponse({
-            status: 404,
-            statusText: 'Not found',
-          })
-        );
+        observer.error(new HttpErrorResponse(makeNotFoundError()));
       })
     );
     sut.getPokemonsByName().subscribe(
