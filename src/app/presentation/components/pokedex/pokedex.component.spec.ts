@@ -66,8 +66,7 @@ describe('PokedexComponent', () => {
   };
 
   it('should receive 500 if GetPokemonService have something error', () => {
-    const fixture = TestBed.createComponent(PokedexComponent);
-    const sut = fixture.componentInstance;
+    const sut = makeSut();
     spyOn(sut, 'getPokemons').and.returnValues(
       new Observable((observer) => {
         observer.error(new HttpErrorResponse(makeServerError()));
@@ -80,8 +79,7 @@ describe('PokedexComponent', () => {
   });
 
   it('should return data if GetPokemonService is ok', () => {
-    const fixture = TestBed.createComponent(PokedexComponent);
-    const sut = fixture.componentInstance;
+    const sut = makeSut();
     const validData: Pagination<Pokemon> = {
       count: 1,
       pageSize: 1,
@@ -108,15 +106,18 @@ describe('PokedexComponent', () => {
     sut.getPokemons().subscribe((data) => expect(data).toEqual(validData));
   });
 
-  it('should create the Pokedex', () => {
+  const makeSut = (): PokedexComponent => {
     const fixture = TestBed.createComponent(PokedexComponent);
-    const pokedex = fixture.componentInstance;
+    return fixture.componentInstance;
+  };
+
+  it('should create the Pokedex', () => {
+    const pokedex = makeSut();
     expect(pokedex).toBeTruthy();
   });
 
   it('should search pokemon by name', () => {
-    const fixture = TestBed.createComponent(PokedexComponent);
-    const sut = fixture.componentInstance;
+    const sut = makeSut();
     const expectedPokemonName = 'name_searched';
     sut.pokemonName = expectedPokemonName;
     sut.getPokemonsByName().subscribe((data) => {
@@ -128,8 +129,7 @@ describe('PokedexComponent', () => {
   });
 
   it('should receive 500 if GetPokemonByNameService have something error', () => {
-    const fixture = TestBed.createComponent(PokedexComponent);
-    const sut = fixture.componentInstance;
+    const sut = makeSut();
     spyOn(sut, 'getPokemonsByName').and.returnValues(
       new Observable((observer) => {
         observer.error(new HttpErrorResponse(makeServerError()));
@@ -149,8 +149,7 @@ describe('PokedexComponent', () => {
   };
 
   it('should receive 404 if GetPokemonByNameService have something error', () => {
-    const fixture = TestBed.createComponent(PokedexComponent);
-    const sut = fixture.componentInstance;
+    const sut = makeSut();
     spyOn(sut, 'getPokemonsByName').and.returnValues(
       new Observable((observer) => {
         observer.error(new HttpErrorResponse(makeNotFoundError()));
