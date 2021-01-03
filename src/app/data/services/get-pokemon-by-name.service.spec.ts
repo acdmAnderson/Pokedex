@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GetPokemonDetail } from '../api/get-pokemon-detail';
-import { serverError } from '../helpers/http.helper';
+import { notFound, serverError } from '../helpers/http.helper';
 import { PokemonDetailModel } from '../models';
 import { GetPokemonByNameService } from './get-pokemon-by-name.service';
 
@@ -52,10 +52,31 @@ describe('GetPokemonByNameService', () => {
 
   it('should receive 500 if API have something error ', () => {
     const { sut } = makeSut();
+    spyOn(sut, 'findByName').and.returnValues(
+      new Observable((observer) => {
+        observer.error(serverError());
+        observer.complete();
+      })
+    );
     const pokemonName = 'name_searched';
     sut.findByName(pokemonName).subscribe(
       () => fail('Expected a error not a pokemon'),
       (error: HttpErrorResponse) => expect(error.status).toBe(500)
+    );
+  });
+
+  it('should receive 404 if API not found pokemon searched', () => {
+    const { sut } = makeSut();
+    spyOn(sut, 'findByName').and.returnValues(
+      new Observable((observer) => {
+        observer.error(notFound());
+        observer.complete();
+      })
+    );
+    const pokemonName = 'name_searched';
+    sut.findByName(pokemonName).subscribe(
+      () => fail('Expected a error not a pokemon'),
+      (error: HttpErrorResponse) => expect(error.status).toBe(404)
     );
   });
 });
