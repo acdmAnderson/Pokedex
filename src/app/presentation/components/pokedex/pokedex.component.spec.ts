@@ -58,7 +58,7 @@ describe('PokedexComponent', () => {
     return new GetPokemonStub();
   };
 
-  it('should receive error if GetPokemonService have something error', () => {
+  it('should receive 500 if GetPokemonService have something error', () => {
     const fixture = TestBed.createComponent(PokedexComponent);
     const sut = fixture.componentInstance;
     spyOn(sut, 'getPokemons').and.returnValues(
@@ -114,10 +114,10 @@ describe('PokedexComponent', () => {
 
   it('should search pokemon by name', () => {
     const fixture = TestBed.createComponent(PokedexComponent);
-    const comp = fixture.componentInstance;
+    const sut = fixture.componentInstance;
     const expectedPokemonName = 'name_searched';
-    comp.pokemonName = expectedPokemonName;
-    comp.getPokemonsByName().subscribe((data) => {
+    sut.pokemonName = expectedPokemonName;
+    sut.getPokemonsByName().subscribe((data) => {
       const havePokemon = data.results.some(
         (pokemon) => pokemon.name === expectedPokemonName
       );
@@ -125,7 +125,7 @@ describe('PokedexComponent', () => {
     });
   });
 
-  it('should receive error if GetPokemonByNameService have something error', () => {
+  it('should receive 500 if GetPokemonByNameService have something error', () => {
     const fixture = TestBed.createComponent(PokedexComponent);
     const sut = fixture.componentInstance;
     spyOn(sut, 'getPokemonsByName').and.returnValues(
@@ -141,6 +141,25 @@ describe('PokedexComponent', () => {
     sut.getPokemonsByName().subscribe(
       () => fail('Expected a error not a pokemon'),
       (error: HttpErrorResponse) => expect(error.status).toBe(500)
+    );
+  });
+
+  it('should receive 404 if GetPokemonByNameService have something error', () => {
+    const fixture = TestBed.createComponent(PokedexComponent);
+    const sut = fixture.componentInstance;
+    spyOn(sut, 'getPokemonsByName').and.returnValues(
+      new Observable((observer) => {
+        observer.error(
+          new HttpErrorResponse({
+            status: 404,
+            statusText: 'Not found',
+          })
+        );
+      })
+    );
+    sut.getPokemonsByName().subscribe(
+      () => fail('Expected a error not a pokemon'),
+      (error: HttpErrorResponse) => expect(error.status).toBe(404)
     );
   });
 });
