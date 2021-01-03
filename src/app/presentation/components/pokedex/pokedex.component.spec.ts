@@ -58,17 +58,18 @@ describe('PokedexComponent', () => {
     return new GetPokemonStub();
   };
 
+  const makeServerError = (): HttpErrorResponse => {
+    return new HttpErrorResponse({
+      status: 500,
+      statusText: 'Internal server error',
+    });
+  };
   it('should receive 500 if GetPokemonService have something error', () => {
     const fixture = TestBed.createComponent(PokedexComponent);
     const sut = fixture.componentInstance;
     spyOn(sut, 'getPokemons').and.returnValues(
       new Observable((observer) => {
-        observer.error(
-          new HttpErrorResponse({
-            status: 500,
-            statusText: 'Internal server error',
-          })
-        );
+        observer.error(new HttpErrorResponse(makeServerError()));
       })
     );
     sut.getPokemons().subscribe(
@@ -130,12 +131,7 @@ describe('PokedexComponent', () => {
     const sut = fixture.componentInstance;
     spyOn(sut, 'getPokemonsByName').and.returnValues(
       new Observable((observer) => {
-        observer.error(
-          new HttpErrorResponse({
-            status: 500,
-            statusText: 'Internal server error',
-          })
-        );
+        observer.error(new HttpErrorResponse(makeServerError()));
       })
     );
     sut.getPokemonsByName().subscribe(
