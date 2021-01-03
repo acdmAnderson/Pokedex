@@ -35,7 +35,7 @@ describe('PokedexComponent', () => {
               {
                 id: 1,
                 height: 'valid_height',
-                weight: 'valid_height',
+                weight: 'valid_weight',
                 name: 'valid_name',
                 abilities: [
                   {
@@ -88,7 +88,7 @@ describe('PokedexComponent', () => {
         {
           id: 1,
           height: 'valid_height',
-          weight: 'valid_height',
+          weight: 'valid_weight',
           name: 'valid_name',
           abilities: [
             {
@@ -110,5 +110,18 @@ describe('PokedexComponent', () => {
     const fixture = TestBed.createComponent(PokedexComponent);
     const pokedex = fixture.componentInstance;
     expect(pokedex).toBeTruthy();
+  });
+
+  it('should search pokemon by name', () => {
+    const fixture = TestBed.createComponent(PokedexComponent);
+    const comp = fixture.componentInstance;
+    const expectedPokemonName = 'name_searched';
+    comp.pokemonName = expectedPokemonName;
+    comp.getPokemonsByName().subscribe((data) => {
+      const havePokemon = data.results.some(
+        (pokemon) => pokemon.name === expectedPokemonName
+      );
+      expect(havePokemon).toBe(true);
+    });
   });
 });
