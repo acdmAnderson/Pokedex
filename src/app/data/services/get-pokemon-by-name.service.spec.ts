@@ -112,4 +112,12 @@ describe('GetPokemonByNameService', () => {
       done();
     });
   });
+
+  it('should be called with correct name', () => {
+    const { sut } = makeSut();
+    const pokemonName = 'name_searched';
+    const spyFind = spyOn(sut, 'findByName');
+    sut.findByName(pokemonName);
+    expect(spyFind).toHaveBeenCalledWith('name_searched');
+  });
 });
