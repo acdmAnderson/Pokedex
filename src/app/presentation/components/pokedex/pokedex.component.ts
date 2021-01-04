@@ -84,6 +84,7 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   appendPokemons(): void {
+    const currentPosition = window.scrollY;
     this.pokemonParams.offset = this.pokemonParams.offset + this.LIMIT;
     this.isLoadingAppend = true;
     this.getPokemons()
@@ -94,6 +95,13 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
       .subscribe((paginationPokemon) => {
         const { results } = paginationPokemon;
         this.pokedex = [...this.pokedex, ...results];
+        setTimeout(() => {
+          window.scrollTo(0, currentPosition);
+        }, 200);
       });
+  }
+
+  backToTop(): void {
+    window.scrollTo(0, 0);
   }
 }

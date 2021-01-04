@@ -1,5 +1,16 @@
 <div class="container-fluid my-5">
   <div class="poke-container">
+    <a
+      href="#"
+      class="float bg-fire text-white text-center shadow pt-2"
+      (click)="backToTop()"
+    >
+      <fa-icon
+        class="my-float"
+        [icon]="['fas', 'angle-up']"
+        size="lg"
+      ></fa-icon>
+    </a>
     <ng-template [ngIf]="!isLoading">
       <div class="row">
         <div

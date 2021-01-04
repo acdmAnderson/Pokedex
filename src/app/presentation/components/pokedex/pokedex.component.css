@@ -12,7 +12,20 @@
   min-height: 400px;
 }
 
-@media only screen and (max-width: 780px) {
+.float {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  bottom: 40px;
+  right: 40px;
+  border-radius: 50px;
+}
+
+.my-float {
+  margin-top: 22px;
+}
+
+@media only screen and (max-width: 766px) {
   body {
     background-color: lightblue;
   }
