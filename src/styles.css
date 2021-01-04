@@ -1,86 +1,83 @@
 /* You can add global styles to this file, and also import other style files */
-@import url("https://fonts.googleapis.com/css2?family=Audiowide&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 
 body {
-    font-family: 'Audiowide', cursive;
-    background-color: #EC8484;
+  font-family: 'Audiowide', cursive;
+  background-color: #ec8484;
 }
 
 .animated {
-    transition: transform .5s;
+  transition: transform 0.5s;
 }
 
-.bg-bug{
-    background-color: #3b9950;
+.bg-bug {
+  background-color: #3b9950;
 }
 
-.bg-dark{
-    background-color: #5a5979;
+.bg-dark {
+  background-color: #5a5979;
 }
 
-.bg-dragon{
-    background-color:#61cad9;
+.bg-dragon {
+  background-color: #61cad9;
 }
 
-.bg-eletric{
-    background-color: #fbfb72;
+.bg-electric {
+  background-color: #e3e32b;
 }
 
-.bg-fairy{
-    background-color: #ea1369;
+.bg-fairy {
+  background-color: #ea1369;
 }
 
-.bg-fighting{
-    background-color: #ef6138;
+.bg-fighting {
+  background-color: #ef6138;
 }
 
-.bg-fire{
-    background-color: #fd4c5a;
+.bg-fire {
+  background-color: #fd4c5a;
 }
 
-.bg-flying{
-    background-color: #93b2c7;
+.bg-flying {
+  background-color: #93b2c7;
 }
 
-.bg-ghost{
-    background-color: #906790;
+.bg-ghost {
+  background-color: #906790;
 }
 
-.bg-grass{
-    background-color: #26cb4d;
+.bg-grass {
+  background-color: #26cb4d;
 }
 
-.bg-ground{
-    background-color: #a9702c;
+.bg-ground {
+  background-color: #a9702c;
 }
 
-.bg-ice{
-    background-color: #d7f0fa;
+.bg-ice {
+  background-color: #d7f0fa;
 }
 
-.bg-normal{
-    background-color: #ca98a7;
+.bg-normal {
+  background-color: #ca98a7;
 }
 
-.bg-poison{
-    background-color: #9b69d9;
+.bg-poison {
+  background-color: #9b69d9;
 }
 
-.bg-psychic{
-    background-color: #f81c91;
+.bg-psychic {
+  background-color: #f81c91;
 }
 
-.bg-rock{
-    background-color: #8b3e21;
+.bg-rock {
+  background-color: #8b3e21;
 }
 
-.bg-steel{
-    background-color: #5f756d;
+.bg-steel {
+  background-color: #5f756d;
 }
 
-.bg-water{
-    background-color: #86a8fc;
+.bg-water {
+  background-color: #86a8fc;
 }
-
-
-

@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { GetPokemonByNameService } from 'src/app/data/services/get-pokemon-by-name.service';
@@ -10,9 +17,9 @@ import { Pagination, Pokemon, PokemonParams } from 'src/app/domain/models';
   templateUrl: './pokedex.component.html',
   styleUrls: ['./pokedex.component.css'],
 })
-export class PokedexComponent implements OnInit, OnDestroy {
+export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
   private readonly LIMIT = 20;
-  private readonly OFFSET = 20;
+  private readonly OFFSET = 0;
   private unsubscribeAll: Subject<any>;
 
   @Input() pokemonName: string;
@@ -44,8 +51,22 @@ export class PokedexComponent implements OnInit, OnDestroy {
         this.page = page;
         this.pageSize = pageSize;
         this.pokedex = results;
-        console.log(results);
       });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const { pokemonName } = changes;
+    if (pokemonName?.currentValue) {
+      this.pokemonName = pokemonName.currentValue;
+      this.getPokemonsByName()
+        .pipe(takeUntil(this.unsubscribeAll))
+        .subscribe((paginationPokemon) => {
+          const { page, pageSize, results } = paginationPokemon;
+          this.page = page;
+          this.pageSize = pageSize;
+          this.pokedex = results;
+        });
+    }
   }
 
   ngOnDestroy(): void {
