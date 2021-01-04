@@ -72,6 +72,25 @@
           </div>
         </div>
       </div>
+      <div>
+        <button
+          class="btn btn-outline-light"
+          type="button"
+          *ngIf="!pokemonName"
+          (click)="appendPokemons()"
+        >
+          <span
+            *ngIf="isLoadingAppend"
+            class="spinner-grow spinner-grow-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          Load more
+        </button>
+        <button class="btn btn-primary" type="button" *ngIf="pokemonName">
+          Back
+        </button>
+      </div>
     </ng-template>
   </div>
 </div>

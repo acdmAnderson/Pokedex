@@ -28,6 +28,7 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
   pageSize: number;
   pokedex: Array<Pokemon>;
   isLoading = false;
+  isLoadingAppend = false;
   constructor(
     private readonly getPokemonService: GetPokemonService,
     private readonly getPokemonByNameService: GetPokemonByNameService
@@ -80,5 +81,19 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
 
   getPokemonsByName(): Observable<Pagination<Pokemon>> {
     return this.getPokemonByNameService.findByName(this.pokemonName);
+  }
+
+  appendPokemons(): void {
+    this.pokemonParams.offset = this.pokemonParams.offset + this.LIMIT;
+    this.isLoadingAppend = true;
+    this.getPokemons()
+      .pipe(
+        takeUntil(this.unsubscribeAll),
+        finalize(() => (this.isLoadingAppend = false))
+      )
+      .subscribe((paginationPokemon) => {
+        const { results } = paginationPokemon;
+        this.pokedex = [...this.pokedex, ...results];
+      });
   }
 }
