@@ -15,10 +15,10 @@ export const serverError = (): HttpErrorResponse => {
 };
 
 export const appendParams = function <T = any>(params: T): HttpParams {
-  const httpParams = new HttpParams();
+  let httpParams = new HttpParams();
   for (const key of Object.keys(params)) {
     if (params[key]) {
-      httpParams.append(key, params[key]);
+      httpParams = httpParams.append(key, params[key]);
     }
   }
   return httpParams;
