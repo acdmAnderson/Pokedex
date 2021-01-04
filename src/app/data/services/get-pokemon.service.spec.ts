@@ -123,8 +123,8 @@ describe('GetPokemonService', () => {
     const { sut } = makeSut();
     const serviceResponse: Pagination<Pokemon> = {
       count: 1,
-      pageSize: 0,
-      page: 1,
+      pageSize: 1,
+      page: 0,
       results: [
         {
           id: 1,
@@ -159,5 +159,19 @@ describe('GetPokemonService', () => {
       limit: 1,
       offset: 0,
     });
+  });
+
+  it('should return error if PokemonDetails throws', (done: DoneFn) => {
+    const { sut, getPokemonDetailStub } = makeSut();
+    spyOn(getPokemonDetailStub, 'find').and.throwError(
+      new Error('Internal Server Error')
+    );
+    sut.find(params).subscribe(
+      () => fail('expect a error not a pokemon'),
+      (error: Error) => {
+        expect(error.message).toBe('Internal Server Error');
+        done();
+      }
+    );
   });
 });
