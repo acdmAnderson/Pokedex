@@ -122,6 +122,16 @@ describe('PokedexComponent', () => {
     );
   });
 
+  it('should return append data if GetPokemonService is ok', (done: DoneFn) => {
+    const sut = makeSut();
+    sut.ngOnInit();
+    sut.appendPokemons();
+    setInterval(() => {
+      expect(sut.pokedex.length).toBe(2);
+      done();
+    }, 200);
+  });
+
   it('should return data if GetPokemonService is ok', () => {
     const sut = makeSut();
     const validData: Pagination<Pokemon> = {
