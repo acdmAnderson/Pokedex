@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { notFound, serverError } from '../helpers/http.helper';
+import { PokemonDetailModel } from '../models';
 import { GetPokemonDetail } from './get-pokemon-detail';
 
 describe('GetPokemonDetail', () => {
@@ -41,30 +42,28 @@ describe('GetPokemonDetail', () => {
     );
   });
 
-  //   it('should receive data if API is ok', () => {
-  //     const sut = getPokemon;
-  //     const httpResponse: PokemonDetailModel = {
-  //           id: 1,
-  //           abilities: [
-  //             {
-  //               name: 'valid_ability',
-  //             },
-  //           ],
-  //           height: 10,
-  //           weight: 10,
-  //           name: 'valid_name',
-  //           types: [
-  //             {
-  //               name: 'valid_type',
-  //             },
-  //           ],
-  //     };
-  //     httpClientSpy.get.and.returnValue(of(httpResponse));
-  //     sut.find().subscribe(
-  //       (data: PageModel<PokemonModel>) => {
-  //         expect(data).toEqual(httpResponse);
-  //       },
-  //       (error: HttpErrorResponse) => fail(error)
-  //     );
-  //   });
+  it('should receive data if API is ok', () => {
+    const sut = getPokemonDetail;
+    const valid_url = 'https://valid_url.com';
+    const httpResponse: PokemonDetailModel = {
+      id: 1,
+      abilities: [
+        {
+          name: 'valid_ability',
+        },
+      ],
+      height: 10,
+      weight: 10,
+      name: 'valid_name',
+      types: [
+        {
+          name: 'valid_type',
+        },
+      ],
+    };
+    httpClientSpy.get.and.returnValue(of(httpResponse));
+    sut.find(valid_url).subscribe((data) => {
+      expect(data).toEqual(httpResponse);
+    });
+  });
 });
