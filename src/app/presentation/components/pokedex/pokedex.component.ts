@@ -41,6 +41,10 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
       limit: this.LIMIT,
       offset: this.OFFSET,
     };
+    this.buildPokedex();
+  }
+
+  private buildPokedex(): void {
     this.isLoading = true;
     this.getPokemons()
       .pipe(
@@ -59,12 +63,14 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
     const { pokemonName } = changes;
     if (pokemonName?.currentValue) {
       this.pokemonName = pokemonName.currentValue;
+      this.isLoading = true;
       this.getPokemonsByName()
-        .pipe(takeUntil(this.unsubscribeAll))
+        .pipe(
+          takeUntil(this.unsubscribeAll),
+          finalize(() => (this.isLoading = false))
+        )
         .subscribe((paginationPokemon) => {
-          const { page, pageSize, results } = paginationPokemon;
-          this.page = page;
-          this.pageSize = pageSize;
+          const { results } = paginationPokemon;
           this.pokedex = results;
         });
     }
@@ -103,5 +109,10 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
 
   backToTop(): void {
     window.scrollTo(0, 0);
+  }
+
+  backToFullPokedex(): void {
+    this.pokemonName = null;
+    this.buildPokedex();
   }
 }

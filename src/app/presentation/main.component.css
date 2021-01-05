@@ -1,0 +1,5 @@
+@media only screen and (max-width: 766px) {
+  form.form-inline {
+    width: 250px !important;
+  }
+}

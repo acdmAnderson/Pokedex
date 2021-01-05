@@ -1,6 +1,8 @@
-.card:hover {
+.card:hover,
+.float:hover {
   transform: scale(1.02);
 }
+
 .poke-container {
   display: flex;
   flex-wrap: wrap;
@@ -17,8 +19,9 @@
   width: 40px;
   height: 40px;
   bottom: 40px;
-  right: 40px;
+  right: 20px;
   border-radius: 50px;
+  z-index: 1;
 }
 
 .my-float {
@@ -26,10 +29,6 @@
 }
 
 @media only screen and (max-width: 766px) {
-  body {
-    background-color: lightblue;
-  }
-
   .card {
     text-align: center;
     width: 20rem !important;
@@ -67,5 +66,8 @@
 
   .col-md-7 > div small p {
     padding: 5px;
+  }
+  .row.mt-3-rem {
+    margin-top: 3rem !important;
   }
 }

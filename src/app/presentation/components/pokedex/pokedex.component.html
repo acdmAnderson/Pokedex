@@ -1,18 +1,14 @@
+<a
+  href="#"
+  class="float bg-fire text-white text-center shadow pt-2"
+  (click)="backToTop()"
+>
+  <fa-icon class="my-float" [icon]="['fas', 'angle-up']" size="lg"></fa-icon>
+</a>
 <div class="container-fluid my-5">
-  <div class="poke-container">
-    <a
-      href="#"
-      class="float bg-fire text-white text-center shadow pt-2"
-      (click)="backToTop()"
-    >
-      <fa-icon
-        class="my-float"
-        [icon]="['fas', 'angle-up']"
-        size="lg"
-      ></fa-icon>
-    </a>
+  <div class="poke-container pb-5">
     <ng-template [ngIf]="!isLoading">
-      <div class="row">
+      <div class="row mt-3-rem">
         <div
           class="justify-content-center"
           *ngFor="let pokemon of pokedex"
@@ -83,25 +79,29 @@
           </div>
         </div>
       </div>
-      <div>
-        <button
-          class="btn btn-outline-light"
-          type="button"
-          *ngIf="!pokemonName"
-          (click)="appendPokemons()"
-        >
-          <span
-            *ngIf="isLoadingAppend"
-            class="spinner-grow spinner-grow-sm"
-            role="status"
-            aria-hidden="true"
-          ></span>
-          Load more
-        </button>
-        <button class="btn btn-primary" type="button" *ngIf="pokemonName">
-          Back
-        </button>
-      </div>
+      <button
+        class="btn btn-outline-light"
+        type="button"
+        *ngIf="!pokemonName"
+        (click)="appendPokemons()"
+      >
+        <span
+          *ngIf="isLoadingAppend"
+          class="spinner-grow spinner-grow-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        Load more
+      </button>
     </ng-template>
+  </div>
+  <div *ngIf="pokemonName" class="d-flex justify-content-center">
+    <button
+      class="btn btn-outline-light"
+      type="button"
+      (click)="backToFullPokedex()"
+    >
+      Back to full list
+    </button>
   </div>
 </div>

@@ -18,7 +18,15 @@ export class MainComponent implements OnInit {
     });
   }
 
-  search({ pokemonName }): void {
-    this.pokemonName = pokemonName;
+  search({ pokemonName }: { pokemonName: string }): void {
+    if (pokemonName?.length) {
+      setTimeout(() => (this.pokemonName = pokemonName.toLowerCase()), 50);
+      this.pokemonName = null;
+      this.resetForm();
+    }
+  }
+
+  private resetForm(): void {
+    this.searchForm.get('pokemonName').setValue(null);
   }
 }
