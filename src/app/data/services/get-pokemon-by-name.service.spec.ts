@@ -87,8 +87,8 @@ describe('GetPokemonByNameService', () => {
     const serviceResponse: Array<Pokemon> = [
       {
         id: 1,
-        height: '10 dm',
-        weight: '10 hg',
+        height: `${(1).toLocaleString()} m`,
+        weight: `${(1).toLocaleString()} kg`,
         name: 'valid_name',
         abilities: [
           {
