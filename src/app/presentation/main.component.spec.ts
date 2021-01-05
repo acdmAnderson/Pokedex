@@ -36,4 +36,10 @@ describe('MainComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should be called with correct pokemon name', () => {
+    const spySearch = spyOn(component, 'search');
+    component.search({ pokemonName: 'valid_name' });
+    expect(spySearch).toHaveBeenCalledWith({ pokemonName: 'valid_name' });
+  });
 });
