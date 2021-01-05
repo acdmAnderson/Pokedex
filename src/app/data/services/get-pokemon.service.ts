@@ -22,7 +22,7 @@ export class GetPokemonService extends GetPokemonUseCase {
   ) {
     super();
   }
-  find(params: PokemonParams): Observable<Pagination<Pokemon>> {
+  find(params: PokemonParams): Observable<Array<Pokemon>> {
     return this.getPokemon.find(params).pipe(
       catchError((err: HttpErrorResponse) => throwError(err)),
       mergeMap(async (page) => {
@@ -34,12 +34,7 @@ export class GetPokemonService extends GetPokemonUseCase {
             .toPromise();
           pokedex.push(mapToPokemon(pokemonDetail));
         }
-        return {
-          count,
-          page: mapToPage(next),
-          pageSize: mapToPageSize(pokedex),
-          results: pokedex,
-        };
+        return pokedex;
       })
     );
   }

@@ -35,31 +35,26 @@ describe('PokedexComponent', () => {
       constructor() {
         super();
       }
-      find(): Observable<Pagination<Pokemon>> {
+      find(): Observable<Array<Pokemon>> {
         return new Observable((observer) => {
-          const fakePaginationPokemon: Pagination<Pokemon> = {
-            count: 1,
-            pageSize: 1,
-            page: 0,
-            results: [
-              {
-                id: 1,
-                height: 'valid_height',
-                weight: 'valid_weight',
-                name: 'valid_name',
-                abilities: [
-                  {
-                    name: 'valid_ability',
-                  },
-                ],
-                types: [
-                  {
-                    name: 'valid_type',
-                  },
-                ],
-              },
-            ],
-          };
+          const fakePaginationPokemon: Array<Pokemon> = [
+            {
+              id: 1,
+              height: 'valid_height',
+              weight: 'valid_weight',
+              name: 'valid_name',
+              abilities: [
+                {
+                  name: 'valid_ability',
+                },
+              ],
+              types: [
+                {
+                  name: 'valid_type',
+                },
+              ],
+            },
+          ];
           observer.next(fakePaginationPokemon);
           observer.complete();
         });
@@ -138,29 +133,24 @@ describe('PokedexComponent', () => {
 
   it('should return data if GetPokemonService is ok', () => {
     const sut = makeSut();
-    const validData: Pagination<Pokemon> = {
-      count: 1,
-      pageSize: 1,
-      page: 0,
-      results: [
-        {
-          id: 1,
-          height: 'valid_height',
-          weight: 'valid_weight',
-          name: 'valid_name',
-          abilities: [
-            {
-              name: 'valid_ability',
-            },
-          ],
-          types: [
-            {
-              name: 'valid_type',
-            },
-          ],
-        },
-      ],
-    };
+    const validData: Array<Pokemon> = [
+      {
+        id: 1,
+        height: 'valid_height',
+        weight: 'valid_weight',
+        name: 'valid_name',
+        abilities: [
+          {
+            name: 'valid_ability',
+          },
+        ],
+        types: [
+          {
+            name: 'valid_type',
+          },
+        ],
+      },
+    ];
     sut.getPokemons().subscribe((data) => expect(data).toEqual(validData));
   });
 

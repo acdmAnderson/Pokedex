@@ -51,12 +51,7 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
         takeUntil(this.unsubscribeAll),
         finalize(() => (this.isLoading = false))
       )
-      .subscribe((paginationPokemon) => {
-        const { page, pageSize, results } = paginationPokemon;
-        this.page = page;
-        this.pageSize = pageSize;
-        this.pokedex = results;
-      });
+      .subscribe((paginationPokemon) => (this.pokedex = paginationPokemon));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -81,7 +76,7 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
     this.unsubscribeAll.complete();
   }
 
-  getPokemons(): Observable<Pagination<Pokemon>> {
+  getPokemons(): Observable<Array<Pokemon>> {
     return this.getPokemonService.find(this.pokemonParams);
   }
 
@@ -99,8 +94,7 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
         finalize(() => (this.isLoadingAppend = false))
       )
       .subscribe((paginationPokemon) => {
-        const { results } = paginationPokemon;
-        this.pokedex = [...this.pokedex, ...results];
+        this.pokedex = [...this.pokedex, ...paginationPokemon];
         setTimeout(() => {
           window.scrollTo(0, currentPosition);
         }, 200);
