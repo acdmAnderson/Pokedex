@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Pagination, Pokemon } from 'src/app/domain/models';
+import { Observable } from 'rxjs';
+import { Pokemon } from 'src/app/domain/models';
 import { GetPokemonDetail } from '../api/get-pokemon-detail';
 import { notFound, serverError } from '../helpers/http.helper';
 import { PokemonDetailModel } from '../models';
@@ -84,29 +84,24 @@ describe('GetPokemonByNameService', () => {
   it('should receive data if API returns ok', (done: DoneFn) => {
     const { sut } = makeSut();
     const pokemonName = 'name_searched';
-    const serviceResponse: Pagination<Pokemon> = {
-      count: 1,
-      pageSize: 1,
-      page: 0,
-      results: [
-        {
-          id: 1,
-          height: '10 dm',
-          weight: '10 hg',
-          name: 'valid_name',
-          abilities: [
-            {
-              name: 'valid_ability',
-            },
-          ],
-          types: [
-            {
-              name: 'valid_type',
-            },
-          ],
-        },
-      ],
-    };
+    const serviceResponse: Array<Pokemon> = [
+      {
+        id: 1,
+        height: '10 dm',
+        weight: '10 hg',
+        name: 'valid_name',
+        abilities: [
+          {
+            name: 'valid_ability',
+          },
+        ],
+        types: [
+          {
+            name: 'valid_type',
+          },
+        ],
+      },
+    ];
     sut.findByName(pokemonName).subscribe((data) => {
       expect(data).toEqual(serviceResponse);
       done();

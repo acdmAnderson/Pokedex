@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Pagination, Pokemon } from 'src/app/domain/models';
+import { Pokemon } from 'src/app/domain/models';
 import { GetPokemonByNameUseCase } from 'src/app/domain/usecases/get-pokemon-by-name';
 import { environment } from 'src/environments/environment';
 import { GetPokemonDetail } from '../api/get-pokemon-detail';
@@ -15,18 +15,9 @@ export class GetPokemonByNameService extends GetPokemonByNameUseCase {
     super();
   }
 
-  findByName(pokemonName: string): Observable<Pagination<Pokemon>> {
+  findByName(pokemonName: string): Observable<Array<Pokemon>> {
     return this.getPokemonDetail
       .find(`${environment.pokeApi}/${pokemonName}`)
-      .pipe(
-        map((pokemonDetail) => {
-          return {
-            count: 1,
-            page: 0,
-            pageSize: 1,
-            results: [mapToPokemon(pokemonDetail)],
-          };
-        })
-      );
+      .pipe(map((pokemonDetail) => [mapToPokemon(pokemonDetail)]));
   }
 }

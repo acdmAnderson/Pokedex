@@ -1,16 +1,12 @@
-import { ErrorHandler, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { Pagination, Pokemon, PokemonParams } from 'src/app/domain/models';
+import { Pokemon, PokemonParams } from 'src/app/domain/models';
 import { GetPokemonUseCase } from 'src/app/domain/usecases/get-pokemon';
 import { GetPokemon } from '../api/get-pokemon';
 import { GetPokemonDetail } from '../api/get-pokemon-detail';
 import { catchError, mergeMap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  mapToPage,
-  mapToPageSize,
-  mapToPokemon,
-} from '../helpers/mapper.helper';
+import { mapToPokemon } from '../helpers/mapper.helper';
 
 @Injectable({
   providedIn: 'root',

@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { async, TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 import { GetPokemonService } from 'src/app/data/services/get-pokemon.service';
-import { Pagination, Pokemon } from 'src/app/domain/models';
+import { Pokemon } from 'src/app/domain/models';
 import { GetPokemonUseCase } from 'src/app/domain/usecases/get-pokemon';
 import { PokedexComponent } from './pokedex.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -68,31 +68,26 @@ describe('PokedexComponent', () => {
       constructor() {
         super();
       }
-      findByName(pokemonName: string): Observable<Pagination<Pokemon>> {
+      findByName(pokemonName: string): Observable<Array<Pokemon>> {
         return new Observable((observer) => {
-          const fakePaginationPokemon: Pagination<Pokemon> = {
-            count: 1,
-            pageSize: 1,
-            page: 0,
-            results: [
-              {
-                id: 1,
-                height: 'valid_height',
-                weight: 'valid_weight',
-                name: 'name_searched',
-                abilities: [
-                  {
-                    name: 'valid_ability',
-                  },
-                ],
-                types: [
-                  {
-                    name: 'valid_type',
-                  },
-                ],
-              },
-            ],
-          };
+          const fakePaginationPokemon: Array<Pokemon> = [
+            {
+              id: 1,
+              height: 'valid_height',
+              weight: 'valid_weight',
+              name: 'name_searched',
+              abilities: [
+                {
+                  name: 'valid_ability',
+                },
+              ],
+              types: [
+                {
+                  name: 'valid_type',
+                },
+              ],
+            },
+          ];
           observer.next(fakePaginationPokemon);
           observer.complete();
         });
@@ -169,7 +164,7 @@ describe('PokedexComponent', () => {
     const expectedPokemonName = 'name_searched';
     sut.pokemonName = expectedPokemonName;
     sut.getPokemonsByName().subscribe((data) => {
-      const havePokemon = data.results.some(
+      const havePokemon = data.some(
         (pokemon) => pokemon.name === expectedPokemonName
       );
       expect(havePokemon).toBe(true);

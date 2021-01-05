@@ -10,7 +10,7 @@ import { Observable, Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { GetPokemonByNameService } from 'src/app/data/services/get-pokemon-by-name.service';
 import { GetPokemonService } from 'src/app/data/services/get-pokemon.service';
-import { Pagination, Pokemon, PokemonParams } from 'src/app/domain/models';
+import { Pokemon, PokemonParams } from 'src/app/domain/models';
 
 @Component({
   selector: 'app-pokedex',
@@ -51,7 +51,7 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
         takeUntil(this.unsubscribeAll),
         finalize(() => (this.isLoading = false))
       )
-      .subscribe((paginationPokemon) => (this.pokedex = paginationPokemon));
+      .subscribe((pokemons) => (this.pokedex = pokemons));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -64,10 +64,7 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
           takeUntil(this.unsubscribeAll),
           finalize(() => (this.isLoading = false))
         )
-        .subscribe((paginationPokemon) => {
-          const { results } = paginationPokemon;
-          this.pokedex = results;
-        });
+        .subscribe((pokemons) => (this.pokedex = pokemons));
     }
   }
 
@@ -80,7 +77,7 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
     return this.getPokemonService.find(this.pokemonParams);
   }
 
-  getPokemonsByName(): Observable<Pagination<Pokemon>> {
+  getPokemonsByName(): Observable<Array<Pokemon>> {
     return this.getPokemonByNameService.findByName(this.pokemonName);
   }
 
@@ -93,8 +90,8 @@ export class PokedexComponent implements OnInit, OnDestroy, OnChanges {
         takeUntil(this.unsubscribeAll),
         finalize(() => (this.isLoadingAppend = false))
       )
-      .subscribe((paginationPokemon) => {
-        this.pokedex = [...this.pokedex, ...paginationPokemon];
+      .subscribe((pokemons) => {
+        this.pokedex = [...this.pokedex, ...pokemons];
         setTimeout(() => {
           window.scrollTo(0, currentPosition);
         }, 200);
