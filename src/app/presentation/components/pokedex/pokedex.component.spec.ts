@@ -9,12 +9,16 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GetPokemonByNameUseCase } from 'src/app/domain/usecases/get-pokemon-by-name';
 import { GetPokemonByNameService } from 'src/app/data/services/get-pokemon-by-name.service';
+import {
+  FaIconComponent,
+  FaIconLibrary,
+} from '@fortawesome/angular-fontawesome';
 
 describe('PokedexComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, RouterTestingModule],
-      declarations: [PokedexComponent],
+      declarations: [PokedexComponent, FaIconComponent],
       providers: [
         { provide: GetPokemonService, useValue: makeGetPokemonSut() },
         {
